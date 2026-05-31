@@ -39,7 +39,6 @@ Set them once from a separate, uncommitted script with `Keychain.set("kubera_api
 
 ## Customization
 
-- **Currency scale** — display values are shown in lakhs (÷ 100,000). Change the divisor in the two `displayTotal` lines if you use a different currency or scale.
 - **Colors** — the green/red/grey badge colors are set in the `pctColor` helper.
 - **Fonts / sizes** — adjust the `Font.boldRoundedSystemFont(...)` sizes in the widget layout section.
 
