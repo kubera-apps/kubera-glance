@@ -10,7 +10,7 @@ The widget shows your **investable assets** as a large number and your **net wor
 ## Requirements
 
 - The **Scriptable** app ([App Store](https://apps.apple.com/app/scriptable/id1405459188)) on iOS, iPadOS, or macOS.
-- A **Kubera** account with **V3 Data API** access (Settings → Connect → API / Personal Token).
+- A **Kubera** account with **V3 Data API** access (Settings → API).
 
 ## Setup
 
