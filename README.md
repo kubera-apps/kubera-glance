@@ -15,7 +15,7 @@ The widget shows your **investable assets** as a large number and your **net wor
 ## Setup
 
 1. Install Scriptable.
-2. Create a new script in Scriptable and paste in the contents of [`kubera-widget.js`](kubera-widget.js).
+2. Create a new script in Scriptable and paste in the contents of [`widget.js`](widget.js).
 3. Fill in the three values in the `CONFIG` section near the top:
    ```js
    const apiKey      = "<YOUR_API_KEY>";
