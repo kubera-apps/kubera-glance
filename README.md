@@ -25,18 +25,6 @@ The widget shows your **investable assets** as a large number and your **net wor
 4. Run the script once inside the app and check the console output to confirm it fetches your data.
 5. Long-press your home screen → add a **Scriptable** widget → choose this script.
 
-## Security
-
-**Never commit your real API key, secret, or portfolio ID to a public repo.** Keep the placeholders in the version you push.
-
-For a more secure local setup, store credentials in Scriptable's Keychain instead of inlining them:
-
-```js
-const apiKey = Keychain.get("kubera_api_key");
-```
-
-Set them once from a separate, uncommitted script with `Keychain.set("kubera_api_key", "...")`.
-
 ## Customization
 
 - **Colors** — the green/red/grey badge colors are set in the `pctColor` helper.
