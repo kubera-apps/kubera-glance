@@ -26,12 +26,7 @@ The widget shows your **net worth** as the top number and your **investable asse
    const portfolioId = "<YOUR_PORTFOLIO_ID>";
    ```
 4. Run the script once inside the app and check the console output to confirm it fetches your data.
-5. *(Optional)* To preview the layout without API access, set `TEST_DATA` in the `CONFIG` section to some made-up numbers, then run the script. Set it back to `null` when you're done:
-   ```js
-   const TEST_DATA = { netWorth: 1_234_567_890, investable: 81_750_000,
-                       ytd_networth: 6.8, ytd_investable: -13.0 };
-   ```
-6. Long-press your home screen → add a **Scriptable** widget → choose this script. Pick whichever size you like; the layout adapts automatically.
+5. Long-press your home screen → add a **Scriptable** widget → choose this script. Pick whichever size you like; the layout adapts automatically.
 
 ## Customization
 
