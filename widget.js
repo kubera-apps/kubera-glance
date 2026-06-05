@@ -40,6 +40,15 @@ const portfolioId = "<YOUR_PORTFOLIO_ID>";
 
 const host = "https://api.kubera.com";
 
+// ===== TEST MODE ============================================================
+// Set TEST_DATA to preview the widget with made-up numbers WITHOUT calling the
+// API (handy for checking layout across the small / medium / large sizes, big
+// values, negative CAGR, etc.). Leave it `null` to use your real portfolio.
+//
+// const TEST_DATA = { netWorth: 1_234_567_890, investable: 81_750_000,
+//                       ytd_networth: 6.8, ytd_investable: -13.0 };
+const TEST_DATA = null;
+
 // IMPORTANT: the path used to build the signature must NOT include the host
 // or any query string -- only the path itself.
 const requestPath = "/api/v3/data/portfolio/" + portfolioId;
@@ -245,10 +254,13 @@ function pctColor(v) {
 // MAIN
 // =============================================================================
 
-const json = await loadPortfolio();
-
-// The V3 Data API wraps the payload under `data`.
-const d = json.data;
+// In test mode, skip the network call and use the made-up numbers above.
+const d = TEST_DATA
+  ? { netWorth: TEST_DATA.netWorth,
+      investable: TEST_DATA.investable,
+      cagr: { ytd_networth: TEST_DATA.ytd_networth,
+              ytd_investable: TEST_DATA.ytd_investable } }
+  : (await loadPortfolio()).data; // the V3 Data API wraps the payload under `data`
 
 // netWorth / investable are absolute numbers (in the portfolio's base currency).
 const netWorth = Math.floor(d.netWorth);
@@ -269,42 +281,112 @@ console.log(`display: ${displayTotal} / ${displayInvestableTotal}`,
 
 
 // =============================================================================
+// BRAND LOGO
+// =============================================================================
+// The Kubera mark (white "K" on a dark disc), rendered from icon.svg and
+// embedded as a base64 PNG so the widget stays a single self-contained file
+// with no external image dependency. On the dark widget background it reads as
+// a crisp white "K". Displayed small (see `L.logo` below).
+const LOGO_B64 = "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";
+
+function kuberaLogo() {
+  return Image.fromData(Data.fromBase64String(LOGO_B64));
+}
+
+
+// =============================================================================
+// TIME-OF-DAY BACKGROUND
+// =============================================================================
+// Pick a dark background gradient based on the local clock. All four palettes
+// stay dark enough that the white text and coloured badges remain readable --
+// only the hue shifts: warm at dawn, cool slate midday, purple dusk, navy night.
+// Edit the hour cut-offs or the colour pairs to taste.
+function timeOfDayGradient() {
+  const hour = new Date().getHours();
+
+  let top, bottom;
+  if (hour < 5 || hour >= 21) { top = "#0b1020"; bottom = "#05070d"; }      // night
+  else if (hour < 11)         { top = "#3a2614"; bottom = "#16110b"; }      // morning
+  else if (hour < 17)         { top = "#262a30"; bottom = "#15171b"; }      // day
+  else                        { top = "#2a1830"; bottom = "#120a16"; }      // evening
+
+  const g = new LinearGradient();
+  g.colors = [new Color(top), new Color(bottom)];
+  g.locations = [0, 1];
+  g.startPoint = new Point(0, 0); // top
+  g.endPoint = new Point(0, 1);   // bottom
+  return g;
+}
+
+
+// =============================================================================
 // WIDGET LAYOUT
 // =============================================================================
 
+// Adapt sizing to the widget family so everything stays readable and nothing
+// gets clipped on the small size. `config.widgetFamily` is undefined when the
+// script is run inside the app -- we preview it as medium in that case.
+const family = config.widgetFamily;
+const isSmall = family === "small";
+
+const L = isSmall
+  ? { logo: 18, title: 12, num: 22, pct: 11, padding: 14, gapHeader: 10, gapRow: 6, badgeGap: 5 }
+  : { logo: 26, title: 17, num: 28, pct: 14, padding: 18, gapHeader: 16, gapRow: 10, badgeGap: 6 };
+
 const w = new ListWidget();
-w.backgroundColor = Color.gray();
+w.backgroundColor = new Color("#1c1c1e");      // fallback if gradients are unavailable
+w.backgroundGradient = timeOfDayGradient();    // dark gradient that shifts with the time of day
+w.setPadding(L.padding, L.padding, L.padding, L.padding);
 
-// Title
-const title = w.addText("KUBERA");
-title.font = Font.boldRoundedSystemFont(20);
+// Header: logo mark + wordmark.
+const header = w.addStack();
+header.centerAlignContent();
+const logo = header.addImage(kuberaLogo());
+logo.imageSize = new Size(L.logo, L.logo);
+header.addSpacer(8);
+const title = header.addText("KUBERA");
+title.font = Font.boldRoundedSystemFont(L.title);
 title.textColor = Color.white();
-w.addSpacer(20);
+title.lineLimit = 1;
+title.minimumScaleFactor = 0.7;
 
-// Net worth: number + its YTD CAGR badge.
-const nwRow = w.addStack();
-nwRow.bottomAlignContent();
-const nwNum = nwRow.addText(displayTotal);
-nwNum.font = Font.boldRoundedSystemFont(24);
-nwNum.textColor = Color.white();
-nwRow.addSpacer(6);
-const nwPct = nwRow.addText(fmtPct(ytdNetworth));
-nwPct.font = Font.boldRoundedSystemFont(13);
-nwPct.textColor = pctColor(ytdNetworth);
+w.addSpacer(L.gapHeader);
 
-w.addSpacer(10);
+// One metric row: big number + a coloured YTD CAGR badge.
+// `lineLimit` + `minimumScaleFactor` let the number shrink to fit instead of
+// truncating ("31.0..."), and the trailing spacer keeps everything left-aligned
+// so the number has room to scale down on the small widget.
+function addMetric(amount, pct) {
+  const row = w.addStack();
+  row.bottomAlignContent();
 
-// Investable assets: number + its YTD CAGR badge.
-const investRow = w.addStack();
-investRow.bottomAlignContent();
-const invNum = investRow.addText(displayInvestableTotal);
-invNum.font = Font.boldRoundedSystemFont(22);
-invNum.textColor = Color.white();
-investRow.addSpacer(6);
-const invPct = investRow.addText(fmtPct(ytdInvestable));
-invPct.font = Font.boldRoundedSystemFont(16);
-invPct.textColor = pctColor(ytdInvestable);
+  const num = row.addText(amount);
+  num.font = Font.boldRoundedSystemFont(L.num);
+  num.textColor = Color.white();
+  num.lineLimit = 1;
+  num.minimumScaleFactor = 0.5;
 
-// Render the widget (works both on the home screen and when run in-app).
+  row.addSpacer(L.badgeGap);
+
+  const badge = row.addText(fmtPct(pct));
+  badge.font = Font.boldRoundedSystemFont(L.pct);
+  badge.textColor = pctColor(pct);
+  badge.lineLimit = 1;
+  badge.minimumScaleFactor = 0.7;
+
+  row.addSpacer();
+}
+
+addMetric(displayTotal, ytdNetworth);
+w.addSpacer(L.gapRow);
+addMetric(displayInvestableTotal, ytdInvestable);
+
+// Render the widget. When run inside the app, also show a live preview at the
+// matching size so you can see exactly how it will look on the home screen.
 Script.setWidget(w);
+if (config.runsInApp) {
+  if (isSmall) await w.presentSmall();
+  else if (family === "large") await w.presentLarge();
+  else await w.presentMedium();
+}
 Script.complete();

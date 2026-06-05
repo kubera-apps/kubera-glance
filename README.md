@@ -27,8 +27,11 @@ The widget shows your **investable assets** as a large number and your **net wor
 
 ## Customization
 
-- **Colors** — the green/red/grey badge colors are set in the `pctColor` helper.
-- **Fonts / sizes** — adjust the `Font.boldRoundedSystemFont(...)` sizes in the widget layout section.
+- **Colors** — the green/red/grey badge colors are set in the `pctColor` helper; the background is set on `w.backgroundColor`.
+- **Fonts / sizes** — the `L` preset object in the widget layout section holds the logo, title, number, and badge sizes for each widget family. The small family uses smaller values, and every text shrinks to fit (`minimumScaleFactor`) so nothing gets clipped.
+- **Logo** — the Kubera mark is embedded as a base64 PNG (`LOGO_B64`), rendered from [`icon.svg`](icon.svg), so the widget stays a single self-contained file.
+
+The widget adapts to the **small**, **medium**, and **large** sizes automatically and previews at the matching size when run inside the app.
 
 ## How it works
 
