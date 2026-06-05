@@ -2,10 +2,20 @@
 
 A [Scriptable](https://scriptable.app) home-screen widget for your [Kubera](https://www.kubera.com) portfolio — net worth, investable assets, and year-to-date CAGR at a glance.
 
-The widget shows your **investable assets** as a large number and your **net worth** below it, each with a YTD CAGR badge (green when up, red when down).
+The widget shows your **net worth** as the top number and your **investable assets** below it, each with a YTD CAGR badge (green when up, red when down). It adapts to the small, medium, and large widget sizes, and its background shifts subtly with the time of day.
 
-<!-- Add a screenshot of the widget on your home screen here — it does a lot of work for a visual project like this.
-![Kubera Glance widget](docs/screenshot.png) -->
+<p align="center">
+  <img src="https://cdn.kubera.com/r/widget/small.png" alt="Kubera Glance — small widget" height="180">
+  &nbsp;&nbsp;
+  <img src="https://cdn.kubera.com/r/widget/medium.png" alt="Kubera Glance — medium widget" height="180">
+</p>
+
+## Features
+
+- **Responsive** — fonts and spacing scale per widget family, and every value shrinks to fit so nothing gets clipped on the small size.
+- **Self-contained** — the Kubera logo is embedded in the script as a base64 PNG; there are no external image files to install.
+- **Time-of-day background** — a dark gradient that shifts hue from dawn to night while keeping the text readable.
+- **Test mode** — preview any numbers without calling the API (see Setup step 5).
 
 ## Requirements
 
@@ -23,15 +33,19 @@ The widget shows your **investable assets** as a large number and your **net wor
    const portfolioId = "<YOUR_PORTFOLIO_ID>";
    ```
 4. Run the script once inside the app and check the console output to confirm it fetches your data.
-5. Long-press your home screen → add a **Scriptable** widget → choose this script.
+5. *(Optional)* To preview the layout without API access, set `TEST_DATA` in the `CONFIG` section to some made-up numbers, then run the script. Set it back to `null` when you're done:
+   ```js
+   const TEST_DATA = { netWorth: 1_234_567_890, investable: 81_750_000,
+                       ytd_networth: 6.8, ytd_investable: -13.0 };
+   ```
+6. Long-press your home screen → add a **Scriptable** widget → choose this script. Pick whichever size you like; the layout adapts automatically.
 
 ## Customization
 
-- **Colors** — the green/red/grey badge colors are set in the `pctColor` helper; the background is set on `w.backgroundColor`.
+- **Colors** — the green/red/grey badge colors are set in the `pctColor` helper.
+- **Background** — `timeOfDayGradient()` returns a dark gradient based on the local hour. Edit the hour cut-offs or color pairs there, or replace the call with a fixed `w.backgroundColor` if you'd rather not have it change.
 - **Fonts / sizes** — the `L` preset object in the widget layout section holds the logo, title, number, and badge sizes for each widget family. The small family uses smaller values, and every text shrinks to fit (`minimumScaleFactor`) so nothing gets clipped.
 - **Logo** — the Kubera mark is embedded as a base64 PNG (`LOGO_B64`), rendered from [`icon.svg`](icon.svg), so the widget stays a single self-contained file.
-
-The widget adapts to the **small**, **medium**, and **large** sizes automatically and previews at the matching size when run inside the app.
 
 ## How it works
 
