@@ -10,13 +10,6 @@ The widget shows your **net worth** as the top number and your **investable asse
   <img src="https://cdn.kubera.com/r/widget/medium.png" alt="Kubera Glance — medium widget" height="180">
 </p>
 
-## Features
-
-- **Responsive** — fonts and spacing scale per widget family, and every value shrinks to fit so nothing gets clipped on the small size.
-- **Self-contained** — the Kubera logo is embedded in the script as a base64 PNG; there are no external image files to install.
-- **Time-of-day background** — a dark gradient that shifts hue from dawn to night while keeping the text readable.
-- **Test mode** — preview any numbers without calling the API (see Setup step 5).
-
 ## Requirements
 
 - The **Scriptable** app ([App Store](https://apps.apple.com/app/scriptable/id1405459188)) on iOS, iPadOS, or macOS.
@@ -45,7 +38,6 @@ The widget shows your **net worth** as the top number and your **investable asse
 - **Colors** — the green/red/grey badge colors are set in the `pctColor` helper.
 - **Background** — `timeOfDayGradient()` returns a dark gradient based on the local hour. Edit the hour cut-offs or color pairs there, or replace the call with a fixed `w.backgroundColor` if you'd rather not have it change.
 - **Fonts / sizes** — the `L` preset object in the widget layout section holds the logo, title, number, and badge sizes for each widget family. The small family uses smaller values, and every text shrinks to fit (`minimumScaleFactor`) so nothing gets clipped.
-- **Logo** — the Kubera mark is embedded as a base64 PNG (`LOGO_B64`), rendered from [`icon.svg`](icon.svg), so the widget stays a single self-contained file.
 
 ## How it works
 
