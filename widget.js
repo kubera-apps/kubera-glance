@@ -205,7 +205,9 @@ async function loadPortfolio() {
  "x-signature": signature,
  "Content-Type": "application/json"
  };
- return await req.loadJSON();
+ const data = await req.loadJSON();
+ console.log(data);
+ return data;
 }
 
 
@@ -297,18 +299,18 @@ function kuberaLogo() {
 // =============================================================================
 // TIME-OF-DAY BACKGROUND
 // =============================================================================
-// Pick a dark background gradient based on the local clock. All four palettes
-// stay dark enough that the white text and coloured badges remain readable --
-// only the hue shifts: warm at dawn, cool slate midday, purple dusk, navy night.
-// Edit the hour cut-offs or the colour pairs to taste.
+// Pick a background gradient based on the local clock. Each palette fades to a
+// near-black bottom so the white text and coloured badges stay readable, while
+// the top colour shifts clearly by period: indigo night, amber morning, teal
+// day, purple evening. Edit the hour cut-offs or the colour pairs to taste.
 function timeOfDayGradient() {
   const hour = new Date().getHours();
 
   let top, bottom;
-  if (hour < 5 || hour >= 21) { top = "#0b1020"; bottom = "#05070d"; }      // night
-  else if (hour < 11)         { top = "#3a2614"; bottom = "#16110b"; }      // morning
-  else if (hour < 17)         { top = "#262a30"; bottom = "#15171b"; }      // day
-  else                        { top = "#2a1830"; bottom = "#120a16"; }      // evening
+  if (hour < 5 || hour >= 21) { top = "#1e3a8a"; bottom = "#070b1a"; }      // night   — deep indigo
+  else if (hour < 11)         { top = "#b5531b"; bottom = "#1c1008"; }      // morning — sunrise amber
+  else if (hour < 17)         { top = "#2f6f8f"; bottom = "#101b22"; }      // day     — sky teal
+  else                        { top = "#6d2a7a"; bottom = "#180a1f"; }      // evening — dusk purple
 
   const g = new LinearGradient();
   g.colors = [new Color(top), new Color(bottom)];
