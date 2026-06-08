@@ -304,7 +304,7 @@ function kuberaLogo() {
 // the top colour shifts clearly by period: indigo night, amber morning, teal
 // day, purple evening. Edit the hour cut-offs or the colour pairs to taste.
 function timeOfDayGradient() {
-  const hour = new Date().getHours();
+  const hour = 0; // new Date().getHours(); - stick with night color now
 
   let top, bottom;
   if (hour < 5 || hour >= 21) { top = "#1e3a8a"; bottom = "#070b1a"; }      // night   — deep indigo
